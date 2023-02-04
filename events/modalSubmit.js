@@ -19,7 +19,7 @@ module.exports = {
                     topic: nickResponse,
                 }
             )
-            modal.member.setNickname(nickResponse).catch((e)=>{log(e)})            
+            modal.member.setNickname(nickResponse).catch((e)=>{console.log(e)})            
             const adminEmbed = new MessageEmbed()
             .setColor('#00ffe1')
             .setAuthor({
@@ -57,10 +57,9 @@ module.exports = {
                     new MessageButton()
                     .setURL(`https://discord.com/channels/${modal.guild.id}/${modal.channel.id}`)
                     .setLabel('перейти к заявке')
-                    .setEmoji('💸')
+                    .setEmoji('⚡')
                     .setStyle('LINK'),
                 )
-
                 requestsChan.send({
                     embeds: [adminEmbed],
                     components: [adminRow]
