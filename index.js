@@ -8,6 +8,8 @@ discordModals(client)
 const Discord = require('discord.js')
 const config = require('./config.json')
 const comms = require("./cmds.js")
+const db = require('qjson-db')
+client.db = new db('./data/DB.json')
 client.discord = Discord
 client.config = config 
 var token = config.token

@@ -6,7 +6,6 @@ module.exports = {
         if(modal.customId === 'requestModal'){
             const requestsChan = client.channels.cache.get(client.config.requestsChannel)
             const nicksChan = client.channels.cache.get(client.config.nicknamesChannel)
-            const requestChannel = client.channels.cache.get(modal.channel.id)
 
             const nickResponse = modal.getTextInputValue('nickInput')
             const nameResponse = modal.getTextInputValue('nameInput')
@@ -14,12 +13,9 @@ module.exports = {
             const findResponse = modal.getTextInputValue('findInput')
             const buildResponse = modal.getTextInputValue('buildInput')
 
-            requestChannel.edit(
-                {
-                    topic: nickResponse,
-                }
-            )
-            modal.member.setNickname(nickResponse).catch((e)=>{console.log(e)})            
+            client.db.set(modal.channel.id, nickResponse)
+
+            modal.member.setNickname(nickResponse).catch((e)=>{console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[31mERROR \x1b[37m| \x1b[36mПроизошла Ошибка > \x1b[31m'+e+'\x1b[0m')})            
             const adminEmbed = new MessageEmbed()
             .setColor('#00ffe1')
             .setAuthor({

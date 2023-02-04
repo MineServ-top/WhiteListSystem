@@ -9,24 +9,24 @@ function rcon(cmd,type,msg){
   const o = {tcp:true,challenge:false}
   const conn = new Rcon(conf.RCon.IP, conf.RCon.Port, conf.RCon.Password, o)
   conn.on('auth', function(){
-      console.log("Authenticated")
-      console.log(time+" | Running command | "+cmd)
-      conn.send(cmd)
+    console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mАвторизовался в RCon.\x1b[0m')
+    console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mВыполняется команда > \x1b[33m'+cmd+'\x1b[0m')
+    conn.send(cmd)
   }).on('response', function(str){
       if(type == '0'){
-        console.log(time+" | Response | "+str)
+        console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mЧерез Discord выполнена команда | ответ > \x1b[33m'+str+'\x1b[0m')
         msg.channel.send({
           content: '**Response:**\n```'+str+'```',
         })
       }
       else{
-          console.log(time+" | Response | "+str)
+        console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mОтвет > \x1b[33m'+str+'\x1b[0m')
       }
       conn.disconnect()
   }).on('error', function(err){
-      console.log(time+" | Error | "+err)
+    console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[31mERROR \x1b[37m| \x1b[36mПроизошла Ошибка > \x1b[31m'+err+'\x1b[0m')
   }).on('end', function(){
-      console.log(time+" | Connection closed")
+    console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mСоединение закрыто.\x1b[0m')
   })
   conn.connect()
 }
@@ -40,7 +40,7 @@ function wladd(r, msg){
     msg.channel.send({
       content: '**Игрок с ником "'+nickname+'" успешно добавлен в вайтлист!**',
     })
-    console.info('Игрок "'+nickname+'" добавлен в вайтлист')
+    console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mИгрок \x1b[33m'+nickname+' \x1b[36mбыл добавлен в вайтлист!\x1b[0m')
   }
 }
 function wlrem(r, msg){
@@ -50,7 +50,7 @@ function wlrem(r, msg){
  else{
     var cmd = conf.WhiteList.rem.replaceAll('$user',nickname)
     rcon(cmd,'1',msg)
-    console.info('Игрок "'+nickname+'" удалён из ВЛ')
+    console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mИгрок \x1b[33m'+nickname+' \x1b[36mбыл удалён из вайтлиста!\x1b[0m')
     msg.channel.send({
       content: '**Игрок с ником "'+nickname+'" успешно удалён из вайтлиста!**',
     })
@@ -67,7 +67,7 @@ function wlban(r, msg){
     msg.channel.send({
       content: '**Игрок с ником "'+nickname+'" успешно забанен!**',
     })
-    console.info('Игрок "'+nickname+'" забанен!')
+    console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mИгрок \x1b[33m'+nickname+' \x1b[36mбыл забанен!\x1b[0m')
   }
 }
 
@@ -81,7 +81,7 @@ function wlunban(r, msg){
   msg.channel.send({
     content: '**Игрок с ником "'+nickname+'" успешно разбанен!**',
   })
-  console.info('Игрок "'+nickname+'" разбенен!')
+  console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mИгрок \x1b[33m'+nickname+' \x1b[36mбыл разбанен!\x1b[0m')
   }
 }
 
@@ -94,7 +94,6 @@ function wlcmd(r, msg){
     msg.channel.send({
       content: '**Команда "'+cmd+'" выполнена на сервере!**',
     })
-    console.info('Команда "'+cmd+'" выполнена через дискорд!')
   }
 }
 function wlhelp(r, msg){

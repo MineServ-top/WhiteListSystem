@@ -11,16 +11,16 @@ module.exports = {
             const o = {tcp:true,challenge:false}
             const conn = new Rcon(conf.RCon.IP, conf.RCon.Port, conf.RCon.Password, o)
             conn.on('auth', function(){
-                console.log("Authenticated")
-                console.log(time+" | Running command | "+cmd)
+                console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mАвторизовался в RCon.\x1b[0m')
+                console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mВыполняется команда > \x1b[33m'+cmd+'\x1b[0m')
                 conn.send(cmd)
             }).on('response', function(str){
-                console.log(time+" | Response | "+str)
+                console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mОтвет > \x1b[33m'+str+'\x1b[0m')
                 conn.disconnect()
             }).on('error', function(err){
-                console.log(time+" | Error | "+err)
+                console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[31mERROR \x1b[37m| \x1b[36mПроизошла Ошибка > \x1b[31m'+err+'\x1b[0m')
             }).on('end', function(){
-                console.log(time+" | Connection closed")
+                console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mСоединение закрыто.\x1b[0m')
             })
             conn.connect()
           }
@@ -129,13 +129,13 @@ module.exports = {
         }
 
         const admin = '<@'+interaction.user.id+'>'
-        const nickname = interaction.channel.topic
+        const nickname = String(client.db.get(interaction.channel.id))
         
         if (interaction.customId == "addPlayer"){
             if(interaction.member.permissions.has("ADMINISTRATOR")){
                 var cmd = conf.WhiteList.addCommand.replaceAll('$user',nickname)
                 rcon(cmd)
-                console.info('Игрок "'+nickname+'" добавлен в вайтлист')
+                console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mИгрок \x1b[33m'+nickname+' \x1b[36mбыл добавлен в вайтлист!\x1b[0m')
                 interaction.reply({
                     content: '**Заявка одобрена админом '+admin+' и игрок "'+nickname+'" успешно добавлен в вайтлист!**'
                 })
@@ -152,7 +152,7 @@ module.exports = {
             if(interaction.member.permissions.has("ADMINISTRATOR")){
                 var cmd = conf.WhiteList.remCommand.replaceAll('$user',nickname)
                 rcon(cmd)
-                console.info('Игрок "'+nickname+'" удалён из ВЛ')
+                console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mИгрок \x1b[33m'+nickname+' \x1b[36mбыл удалён из вайтлиста!\x1b[0m')
                 interaction.reply({
                     content: '**Заявка отклонена '+admin+' и игрок "'+nickname+'" удалён из в вайтлиста!**',
                 })
@@ -225,6 +225,7 @@ module.exports = {
             setTimeout(() => {
                 const delChan = client.channels.cache.get(interaction.channel.id)
                 delChan.delete()
+                client.db.delete(interaction.channel.id)
             }, 10000)
         }
     }
