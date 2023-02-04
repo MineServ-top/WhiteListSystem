@@ -5,6 +5,25 @@ module.exports = {
         const {MessageEmbed, MessageActionRow, MessageButton} = require('discord.js')
         const { Modal, TextInputComponent, showModal } = require('discord-modals')
         var conf = client.config
+        function rcon(cmd){
+            const time = new Date()
+            const Rcon = require('rcon')
+            const o = {tcp:true,challenge:false}
+            const conn = new Rcon(conf.RCon.IP, conf.RCon.Port, conf.RCon.Password, o)
+            conn.on('auth', function(){
+                console.log("Authenticated")
+                console.log(time+" | Running command | "+cmd)
+                conn.send(cmd)
+            }).on('response', function(str){
+                console.log(time+" | Response | "+str)
+                conn.disconnect()
+            }).on('error', function(err){
+                console.log(time+" | Error | "+err)
+            }).on('end', function(){
+                console.log(time+" | Connection closed")
+            })
+            conn.connect()
+          }
         if (!interaction.isButton()) return
         if (interaction.customId == "requestEmbed"){
             if (client.guilds.cache.get(interaction.guildId).channels.cache.find(c => c.topic == interaction.user.id)){
@@ -114,24 +133,12 @@ module.exports = {
         
         if (interaction.customId == "addPlayer"){
             if(interaction.member.permissions.has("ADMINISTRATOR")){
-                if(conf.Method == 'RCon'){
-                    var cmd = conf.WhiteList.addCommand.replaceAll('$user',nickname)
-                    const method = require('../methods/RCon.js')
-                    method.execute(cmd,conf,0,0)
-                    console.info('Игрок "'+nickname+'" добавлен в вайтлист')
-                    interaction.reply({
-                        content: '**Заявка одобрена админом '+admin+' и игрок "'+nickname+'" успешно добавлен в вайтлист!**'
-                    })
-                }
-                else if(conf.Method == 'LiteLoader'){
-                    var cmd = conf.WhiteList.addCommand.replaceAll('$user',nickname)
-                    const method = require('../methods/LiteLoader.js')
-                    method.execute(cmd,conf,0,0)
-                    console.info('Игрок "'+nickname+'" добавлен в вайтлист')
-                    interaction.reply({
-                        content: '**Заявка одобрена админом '+admin+' и игрок "'+nickname+'" успешно добавлен в вайтлист!**'
-                    })
-                }
+                var cmd = conf.WhiteList.addCommand.replaceAll('$user',nickname)
+                rcon(cmd)
+                console.info('Игрок "'+nickname+'" добавлен в вайтлист')
+                interaction.reply({
+                    content: '**Заявка одобрена админом '+admin+' и игрок "'+nickname+'" успешно добавлен в вайтлист!**'
+                })
             }
             else{
                 interaction.reply({
@@ -143,24 +150,9 @@ module.exports = {
 
         if (interaction.customId == "removePlayer"){
             if(interaction.member.permissions.has("ADMINISTRATOR")){
-                if(conf.Method == 'RCon'){
-                    var cmd = conf.WhiteList.remCommand.replaceAll('$user',nickname)
-                    const method = require('../methods/RCon.js')
-                    method.execute(cmd,conf,0,0)
-                    console.info('Игрок "'+nickname+'" удалён из ВЛ')
-                    interaction.reply({
-                        content: '**Заявка отклонена '+admin+' и игрок "'+nickname+'" удалён из в вайтлиста!**',
-                    })
-                }
-                else if(conf.Method == 'LiteLoader'){
-                    var cmd = conf.WhiteList.remCommand.replaceAll('$user',nickname)
-                    const method = require('../methods/LiteLoader.js')
-                    method.execute(cmd,conf,0,0)
-                    console.info('Игрок "'+nickname+'" удалён из ВЛ')
-                    interaction.reply({
-                        content: '**Заявка отклонена '+admin+' и игрок "'+nickname+'" удалён из в вайтлиста!**',
-                    })
-                }
+                var cmd = conf.WhiteList.remCommand.replaceAll('$user',nickname)
+                rcon(cmd)
+                console.info('Игрок "'+nickname+'" удалён из ВЛ')
                 interaction.reply({
                     content: '**Заявка отклонена '+admin+' и игрок "'+nickname+'" удалён из в вайтлиста!**',
                 })
