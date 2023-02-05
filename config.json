@@ -20,6 +20,31 @@
     },
 
     "WhiteList": {
+        "Question1": {
+            "Label": "ваш никнейм",
+            "Placeholder": "напишите свой никнейм в Minecraft",
+            "Style": "SHORT"
+        },
+        "Question2": {
+            "Label": "ваше имя / возраст",
+            "Placeholder": "напишите своё имя и возраст",
+            "Style": "SHORT"
+        },
+        "Question3": {
+            "Label": "как относитесь к читам",
+            "Placeholder": "напишите, как вы относитесь к читам",
+            "Style": "SHORT"
+        },
+        "Question4": {
+            "Label": "как вы узнали о сервере",
+            "Placeholder": "'напишите, как вы узнали о сервере",
+            "Style": "SHORT"
+        },
+        "Question5": {
+            "Label": "что вы собираетесь делать",
+            "Placeholder": "напишите, что вы собираетесь делать на сервере",
+            "Style": "LONG"
+        },
         "addCommand":"wl add $user",
         "remCommand":"wl remove $user",
 

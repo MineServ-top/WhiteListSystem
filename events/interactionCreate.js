@@ -33,14 +33,14 @@ module.exports = {
                 })
             }
             interaction.guild.channels.create(`заявка-${interaction.user.username}`,{
-                parent: client.config.requestParent,
+                parent: conf.requestParent,
                 topic: interaction.user.id,
                 permissionOverwrites: [{
                     id: interaction.user.id,
                     allow: ['SEND_MESSAGES', 'VIEW_CHANNEL'],
                   },
                   {
-                    id: client.config.adminRole,
+                    id: conf.adminRole,
                     allow: ['SEND_MESSAGES', 'VIEW_CHANNEL'],
                   },
                   {
@@ -62,10 +62,10 @@ module.exports = {
                         name: 'Заполните Анкету'
                     })
                 .setDescription('**Нажмите на кнопку ниже, чтобы заполнить анкету для входа на сервер!**')
-                .setThumbnail(client.config.thumbImage)
+                .setThumbnail(conf.thumbImage)
                 .setFooter(
                     {
-                        text: client.config.footerText
+                        text: conf.footerText
                     })
                 const row = new MessageActionRow()
                 .addComponents(
@@ -90,33 +90,33 @@ module.exports = {
         .addComponents(
             new TextInputComponent()
             .setCustomId('nickInput')
-            .setLabel('ваш никнейм')
-            .setStyle('SHORT')
-            .setPlaceholder('напишите свой никнейм в Minecraft')
+            .setLabel(conf.WhiteList.Question1.Label)
+            .setPlaceholder(conf.WhiteList.Question1.Placeholder)
+            .setStyle(conf.WhiteList.Question1.Style)
             .setRequired(true),
             new TextInputComponent()
             .setCustomId('nameInput')
-            .setLabel('ваше имя / возраст')
-            .setStyle('SHORT')
-            .setPlaceholder('напишите своё имя и возраст')
+            .setLabel(conf.WhiteList.Question2.Label)
+            .setPlaceholder(conf.WhiteList.Question2.Placeholder)
+            .setStyle(conf.WhiteList.Question2.Style)
             .setRequired(true),
             new TextInputComponent()
             .setCustomId('cheatsInput')
-            .setLabel('как относитесь к читам')
-            .setStyle('SHORT')
-            .setPlaceholder('напишите, как вы относитесь к читам')
+            .setLabel(conf.WhiteList.Question3.Label)
+            .setPlaceholder(conf.WhiteList.Question3.Placeholder)
+            .setStyle(conf.WhiteList.Question3.Style)
             .setRequired(true),
             new TextInputComponent()
             .setCustomId('findInput')
-            .setLabel('как вы узнали о сервере')
-            .setStyle('SHORT')
-            .setPlaceholder('напишите, как вы узнали о сервере')
+            .setLabel(conf.WhiteList.Question4.Label)
+            .setPlaceholder(conf.WhiteList.Question4.Placeholder)
+            .setStyle(conf.WhiteList.Question4.Style)
             .setRequired(true),
             new TextInputComponent()
             .setCustomId('buildInput')
-            .setLabel('что вы собираетесь делать')
-            .setStyle('LONG') //'SHORT' or 'LONG'
-            .setPlaceholder('напишите, что вы собираетесь делать на сервере')
+            .setLabel(conf.WhiteList.Question5.Label)
+            .setPlaceholder(conf.WhiteList.Question5.Placeholder)
+            .setStyle(conf.WhiteList.Question5.Style) //'SHORT' or 'LONG'
             .setRequired(true)
             )
             if (!interaction.isButton()) return
@@ -171,9 +171,9 @@ module.exports = {
                     name: 'подтвердить удаление заявки!'
                 })
                 .setDescription('**Вы точно хотите удалить заявку? Это действие невозможно отменить!**')
-                .setThumbnail(client.config.thumbImage)
+                .setThumbnail(conf.thumbImage)
                 .setFooter({
-                    text: client.config.footerText
+                    text: conf.footerText
                 })
             const row = new MessageActionRow()
             .addComponents(
@@ -200,9 +200,9 @@ module.exports = {
                 name: 'удаление заявки отменено!'
             })
             .setDescription('**мяу!**')
-            .setThumbnail(client.config.thumbImage)
+            .setThumbnail(conf.thumbImage)
             .setFooter({
-                text: client.config.footerText
+                text: conf.footerText
             })
             interaction.reply({
                 embeds: [embed]
@@ -215,9 +215,9 @@ module.exports = {
                 name: 'заявка будет удалена через 10 секунд!'
             })
             .setDescription('**Эх, прощай, мы с тобой больше не увидимся (но это не точно)**')
-            .setThumbnail(client.config.thumbImage)
+            .setThumbnail(conf.thumbImage)
             .setFooter({
-                text: client.config.footerText
+                text: conf.footerText
             })
             interaction.reply({
                 embeds: [embed]
