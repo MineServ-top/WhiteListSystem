@@ -35,6 +35,7 @@ module.exports = {
             interaction.guild.channels.create({
                 name: 'заявка-'+interaction.user.username,
                 topic: interaction.user.id+'-wl',
+                parent: conf.requestParent,
                 type: ChannelType.GuildText,
                 permissionOverwrites: [
                 {
@@ -56,7 +57,7 @@ module.exports = {
                     ephemeral: true
                 })
                 const embed = new EmbedBuilder()
-                .setColor('#00ffe1')
+                .setColor('#00bd6d')
                 .setAuthor(
                     {
                         name: 'Заявка Создана'
@@ -166,7 +167,7 @@ module.exports = {
         }
         if (interaction.customId == "deleteChan"){
             const embed = new EmbedBuilder()
-                .setColor('#00ffe1')
+                .setColor('#00bd6d')
                 .setAuthor({
                     name: 'Удаление Заявки'
                 })
@@ -195,7 +196,7 @@ module.exports = {
         }
         if (interaction.customId == "not"){
             const embed = new EmbedBuilder()
-            .setColor('#00ffe1')
+            .setColor('#00bd6d')
             .setAuthor({
                 name: 'Удаление Заявки'
             })
@@ -210,7 +211,7 @@ module.exports = {
         }
         if (interaction.customId == "yes"){
             const embed = new EmbedBuilder()
-            .setColor('#00ffe1')
+            .setColor('#00bd6d')
             .setAuthor({
                 name: 'Удаление Заявки'
             })

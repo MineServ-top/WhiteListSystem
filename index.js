@@ -6,7 +6,7 @@ const client = new Client({ intents: [GatewayIntentBits.MessageContent,GatewayIn
 const discordModals = require('discord-modals')
 discordModals(client)
 const Discord = require('discord.js')
-const config = require('./config.json')
+const config = require('./devconfig.json')
 const comms = require("./cmds.js")
 const db = require('qjson-db')
 client.db = new db('./data/DB.json')

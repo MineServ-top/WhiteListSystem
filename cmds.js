@@ -100,7 +100,7 @@ function wlhelp(r, msg){
  if (!msg.member.permissions.has("ADMINISTRATOR")) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
  else{
   const embed = new EmbedBuilder()
-  .setColor('#00ffe1')
+  .setColor('#00bd6d')
   .setAuthor(
     {
       name: 'MineServ WhiteList'

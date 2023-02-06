@@ -48,7 +48,7 @@ async function sendmsg(){
     }
     await clearOldMessages(sendChannel, 0)
     const embed = new EmbedBuilder()
-    .setColor('#00ffe1')
+    .setColor('#00bd6d')
     .setAuthor(
         {
         name: 'Подать Заявку'

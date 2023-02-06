@@ -17,7 +17,7 @@ module.exports = {
 
             modal.member.setNickname(nickResponse).catch((e)=>{console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[31mERROR \x1b[37m| \x1b[36mПроизошла Ошибка > \x1b[31m'+e+'\x1b[0m')})            
             const adminEmbed = new EmbedBuilder()
-            .setColor('#00ffe1')
+            .setColor('#00bd6d')
             .setAuthor({
                 name: 'Заявка Участника'
             })
@@ -61,7 +61,7 @@ module.exports = {
                     components: [adminRow]
                 })
                 const nickEmbed = new EmbedBuilder()
-                .setColor('#00ffe1')
+                .setColor('#00bd6d')
                 .setAuthor({
                     name: 'Никнейм Участника'
                 })
@@ -75,7 +75,7 @@ module.exports = {
                 })
 
                 const rqEmbed = new EmbedBuilder()
-                .setColor('#00ffe1')
+                .setColor('#00bd6d')
                 .setAuthor({
                     name: 'Заявка подана!'
                 })
