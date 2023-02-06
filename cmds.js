@@ -1,5 +1,5 @@
 const conf = require('./config.json')
-const {MessageEmbed} = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const prefix = conf.prefix
 var t = 0
 //=====WhiteList====
@@ -99,7 +99,7 @@ function wlcmd(r, msg){
 function wlhelp(r, msg){
  if (!msg.member.permissions.has("ADMINISTRATOR")) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
  else{
-  const embed = new MessageEmbed()
+  const embed = new EmbedBuilder()
   .setColor('#00ffe1')
   .setAuthor(
     {

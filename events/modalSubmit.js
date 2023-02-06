@@ -2,7 +2,7 @@
 module.exports = {
     name: 'modalSubmit',
     async execute(modal, client, message, guild){
-        const {MessageEmbed, MessageActionRow, MessageButton} = require('discord.js')
+        const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
         if(modal.customId === 'requestModal'){
             const requestsChan = client.channels.cache.get(client.config.requestsChannel)
             const nicksChan = client.channels.cache.get(client.config.nicknamesChannel)
@@ -16,7 +16,7 @@ module.exports = {
             client.db.set(modal.channel.id, nickResponse)
 
             modal.member.setNickname(nickResponse).catch((e)=>{console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[31mERROR \x1b[37m| \x1b[36mПроизошла Ошибка > \x1b[31m'+e+'\x1b[0m')})            
-            const adminEmbed = new MessageEmbed()
+            const adminEmbed = new EmbedBuilder()
             .setColor('#00ffe1')
             .setAuthor({
                 name: 'Заявка Участника'
@@ -48,19 +48,19 @@ module.exports = {
                 .setFooter({
                     text: client.config.footerText
                 })
-                const adminRow = new MessageActionRow()
+                const adminRow = new ActionRowBuilder()
                 .addComponents(
-                    new MessageButton()
+                    new ButtonBuilder()
                     .setURL(`https://discord.com/channels/${modal.guild.id}/${modal.channel.id}`)
                     .setLabel('перейти к заявке')
                     .setEmoji('⚡')
-                    .setStyle('LINK'),
+                    .setStyle(ButtonStyle.Link),
                 )
                 requestsChan.send({
                     embeds: [adminEmbed],
                     components: [adminRow]
                 })
-                const nickEmbed = new MessageEmbed()
+                const nickEmbed = new EmbedBuilder()
                 .setColor('#00ffe1')
                 .setAuthor({
                     name: 'Никнейм Участника'
@@ -74,7 +74,7 @@ module.exports = {
                     embeds: [nickEmbed],
                 })
 
-                const rqEmbed = new MessageEmbed()
+                const rqEmbed = new EmbedBuilder()
                 .setColor('#00ffe1')
                 .setAuthor({
                     name: 'Заявка подана!'
@@ -106,26 +106,26 @@ module.exports = {
                 .setFooter({
                     text: client.config.footerText
                 })
-                const remBtn = new MessageActionRow()
+                const remBtn = new ActionRowBuilder()
                 .addComponents(
-                    new MessageButton()
+                    new ButtonBuilder()
                     .setCustomId('deleteChan')
                     .setLabel('удалить заявку')
                     .setEmoji('🥺')
-                    .setStyle('DANGER'),
+                    .setStyle(ButtonStyle.Danger),
                 )
-                const admBtn = new MessageActionRow()
+                const admBtn = new ActionRowBuilder()
                 .addComponents(
-                    new MessageButton()
+                    new ButtonBuilder()
                     .setCustomId('addPlayer')
                     .setLabel('принять заявку')
-                    .setEmoji('🍑')
-                    .setStyle('SUCCESS'),
-                    new MessageButton()
+                    .setEmoji('🥐')
+                    .setStyle(ButtonStyle.Success),
+                    new ButtonBuilder()
                     .setCustomId('removePlayer')
                     .setLabel('отклонить заявку')
                     .setEmoji('🍆')
-                    .setStyle('DANGER'),
+                    .setStyle(ButtonStyle.Danger),
                     )
 
                     modal.reply({

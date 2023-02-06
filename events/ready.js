@@ -2,7 +2,7 @@
 module.exports = {
     name: 'ready',
     async execute(client){
-        const {MessageEmbed, MessageActionRow, MessageButton} = require('discord.js')
+        const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
         setTimeout(() => {
             sendmsg()
         }, 3000)
@@ -47,7 +47,7 @@ async function sendmsg(){
         return startmessage
     }
     await clearOldMessages(sendChannel, 0)
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
     .setColor('#00ffe1')
     .setAuthor(
         {
@@ -59,13 +59,13 @@ async function sendmsg(){
         {
             text: client.config.footerText
         })
-        const row = new MessageActionRow()
+        const row = new ActionRowBuilder()
         .addComponents(
-            new MessageButton()
+            new ButtonBuilder()
             .setCustomId('requestEmbed')
             .setLabel('Подать Заявку')
-            .setEmoji(':tyanka:898590397285171211')
-            .setStyle('SUCCESS')
+            .setEmoji('📝')
+            .setStyle(ButtonStyle.Success)
             )
             sendChannel.send(
                 {

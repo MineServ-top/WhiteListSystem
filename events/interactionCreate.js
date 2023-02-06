@@ -2,7 +2,7 @@
 module.exports = {
     name: 'interactionCreate',
     async execute(interaction, client){
-        const {MessageEmbed, MessageActionRow, MessageButton} = require('discord.js')
+        const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ChannelType, PermissionsBitField } = require('discord.js')
         const { Modal, TextInputComponent, showModal } = require('discord-modals')
         var conf = client.config
         function rcon(cmd){
@@ -26,40 +26,40 @@ module.exports = {
           }
         if (!interaction.isButton()) return
         if (interaction.customId == "requestEmbed"){
-            if (client.guilds.cache.get(interaction.guildId).channels.cache.find(c => c.topic == interaction.user.id)){
+            if (client.guilds.cache.get(interaction.guildId).channels.cache.find(c => c.topic == interaction.user.id+'-wl')){
                 return interaction.reply({
                     content: 'У вас уже есть заявка!',
                     ephemeral: true
                 })
             }
-            interaction.guild.channels.create(`заявка-${interaction.user.username}`,{
-                parent: conf.requestParent,
-                topic: interaction.user.id,
-                permissionOverwrites: [{
+            interaction.guild.channels.create({
+                name: 'заявка-'+interaction.user.username,
+                topic: interaction.user.id+'-wl',
+                type: ChannelType.GuildText,
+                permissionOverwrites: [
+                {
                     id: interaction.user.id,
-                    allow: ['SEND_MESSAGES', 'VIEW_CHANNEL'],
-                  },
-                  {
+                    allow: [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel],
+                },
+                {
                     id: conf.adminRole,
-                    allow: ['SEND_MESSAGES', 'VIEW_CHANNEL'],
-                  },
-                  {
+                    allow: [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel],
+                },
+                {
                     id: interaction.guild.roles.everyone,
-                    deny: ['VIEW_CHANNEL'],
-                  },
-                ],
-                type: 'text'
+                    deny: [PermissionsBitField.Flags.ViewChannel],
+                }],
             }).then(async c => {
                 const sendChannel = client.channels.cache.get(c.id)
                 interaction.reply({
                     content: `Заявка создана! Пожалуйста заполните анкету! <#${c.id}>`,
                     ephemeral: true
                 })
-                const embed = new MessageEmbed()
+                const embed = new EmbedBuilder()
                 .setColor('#00ffe1')
                 .setAuthor(
                     {
-                        name: 'Заполните Анкету'
+                        name: 'Заявка Создана'
                     })
                 .setDescription('**Нажмите на кнопку ниже, чтобы заполнить анкету для входа на сервер!**')
                 .setThumbnail(conf.thumbImage)
@@ -67,13 +67,13 @@ module.exports = {
                     {
                         text: conf.footerText
                     })
-                const row = new MessageActionRow()
+                const row = new ActionRowBuilder()
                 .addComponents(
-                    new MessageButton()
+                    new ButtonBuilder()
                         .setCustomId('requestChanEmbed')
                         .setLabel('Заполнить Анкету')
                         .setEmoji('💫')
-                        .setStyle('SUCCESS')
+                        .setStyle(ButtonStyle.Success)
                         )
                     sendChannel.send(
                         {
@@ -86,7 +86,7 @@ module.exports = {
         }
         const reqModal = new Modal()
         .setCustomId('requestModal')
-        .setTitle('Заполнить Анкету')
+        .setTitle('Заполните Анкету')
         .addComponents(
             new TextInputComponent()
             .setCustomId('nickInput')
@@ -165,28 +165,28 @@ module.exports = {
             }
         }
         if (interaction.customId == "deleteChan"){
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
                 .setColor('#00ffe1')
                 .setAuthor({
-                    name: 'подтвердить удаление заявки!'
+                    name: 'Удаление Заявки'
                 })
                 .setDescription('**Вы точно хотите удалить заявку? Это действие невозможно отменить!**')
                 .setThumbnail(conf.thumbImage)
                 .setFooter({
                     text: conf.footerText
                 })
-            const row = new MessageActionRow()
+            const row = new ActionRowBuilder()
             .addComponents(
-                new MessageButton()
+                new ButtonBuilder()
                 .setCustomId('not')
                 .setLabel('отменить')
                 .setEmoji('💚')
-                .setStyle('SUCCESS'),
-                new MessageButton()
+                .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
                 .setCustomId('yes')
                 .setLabel('удалить')
                 .setEmoji('❤️')
-                .setStyle('DANGER'),
+                .setStyle(ButtonStyle.Danger),
             )
             interaction.reply({
                 embeds: [embed],
@@ -194,12 +194,12 @@ module.exports = {
             })
         }
         if (interaction.customId == "not"){
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
             .setColor('#00ffe1')
             .setAuthor({
-                name: 'удаление заявки отменено!'
+                name: 'Удаление Заявки'
             })
-            .setDescription('**мяу!**')
+            .setDescription('**Удаление заявки отменено!**')
             .setThumbnail(conf.thumbImage)
             .setFooter({
                 text: conf.footerText
@@ -209,12 +209,12 @@ module.exports = {
             })
         }
         if (interaction.customId == "yes"){
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
             .setColor('#00ffe1')
             .setAuthor({
-                name: 'заявка будет удалена через 10 секунд!'
+                name: 'Удаление Заявки'
             })
-            .setDescription('**Эх, прощай, мы с тобой больше не увидимся (но это не точно)**')
+            .setDescription('**Заявка будет удалена через 10 секунд! Это действие невозможно отменить!**')
             .setThumbnail(conf.thumbImage)
             .setFooter({
                 text: conf.footerText

@@ -1,8 +1,8 @@
 //============-MineServ WL BY Alpha-============
 //===================-VAR`S-====================
 const fs = require('fs')
-const {Client} = require('discord.js');
-const client = new Client({ intents: 32767 })
+const { Client, GatewayIntentBits } = require('discord.js');
+const client = new Client({ intents: [GatewayIntentBits.MessageContent,GatewayIntentBits.Guilds,GatewayIntentBits.GuildMessages,GatewayIntentBits.GuildMembers,GatewayIntentBits.GuildIntegrations]})
 const discordModals = require('discord-modals')
 discordModals(client)
 const Discord = require('discord.js')
