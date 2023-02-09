@@ -5,8 +5,8 @@ module.exports = {
         const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ChannelType, PermissionsBitField } = require('discord.js')
         const { Modal, TextInputComponent, showModal } = require('discord-modals')
         var conf = client.config
+        const time = new Date()
         function rcon(cmd){
-            const time = new Date()
             const Rcon = require('rcon')
             const o = {tcp:true,challenge:false}
             const conn = new Rcon(conf.RCon.IP, conf.RCon.Port, conf.RCon.Password, o)
