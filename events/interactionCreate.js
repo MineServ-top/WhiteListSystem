@@ -90,31 +90,31 @@ module.exports = {
         .setTitle('Заполните Анкету')
         .addComponents(
             new TextInputComponent()
-            .setCustomId('nickInput')
+            .setCustomId('input1')
             .setLabel(conf.WhiteList.Question1.Label)
             .setPlaceholder(conf.WhiteList.Question1.Placeholder)
             .setStyle(conf.WhiteList.Question1.Style)
             .setRequired(true),
             new TextInputComponent()
-            .setCustomId('nameInput')
+            .setCustomId('input2')
             .setLabel(conf.WhiteList.Question2.Label)
             .setPlaceholder(conf.WhiteList.Question2.Placeholder)
             .setStyle(conf.WhiteList.Question2.Style)
             .setRequired(true),
             new TextInputComponent()
-            .setCustomId('cheatsInput')
+            .setCustomId('input3')
             .setLabel(conf.WhiteList.Question3.Label)
             .setPlaceholder(conf.WhiteList.Question3.Placeholder)
             .setStyle(conf.WhiteList.Question3.Style)
             .setRequired(true),
             new TextInputComponent()
-            .setCustomId('findInput')
+            .setCustomId('input4')
             .setLabel(conf.WhiteList.Question4.Label)
             .setPlaceholder(conf.WhiteList.Question4.Placeholder)
             .setStyle(conf.WhiteList.Question4.Style)
             .setRequired(true),
             new TextInputComponent()
-            .setCustomId('buildInput')
+            .setCustomId('input5')
             .setLabel(conf.WhiteList.Question5.Label)
             .setPlaceholder(conf.WhiteList.Question5.Placeholder)
             .setStyle(conf.WhiteList.Question5.Style) //'SHORT' or 'LONG'

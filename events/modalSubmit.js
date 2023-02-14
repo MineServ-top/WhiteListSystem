@@ -3,15 +3,16 @@ module.exports = {
     name: 'modalSubmit',
     async execute(modal, client, message, guild){
         const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
+        var conf = client.config
         if(modal.customId === 'requestModal'){
             const requestsChan = client.channels.cache.get(client.config.requestsChannel)
             const nicksChan = client.channels.cache.get(client.config.nicknamesChannel)
 
-            const nickResponse = modal.getTextInputValue('nickInput')
-            const nameResponse = modal.getTextInputValue('nameInput')
-            const cheatsResponse = modal.getTextInputValue('cheatsInput')
-            const findResponse = modal.getTextInputValue('findInput')
-            const buildResponse = modal.getTextInputValue('buildInput')
+            const responce1 = modal.getTextInputValue('input1')
+            const responce2 = modal.getTextInputValue('input2')
+            const responce3 = modal.getTextInputValue('input3')
+            const responce4 = modal.getTextInputValue('input4')
+            const responce5 = modal.getTextInputValue('input5')
 
             client.db.set(modal.channel.id, nickResponse)
 
@@ -24,24 +25,24 @@ module.exports = {
             .setDescription('**Ник участника: <@'+modal.user.id+'>, канал: <#'+modal.channel.id+'>\nДля принятия / отклонения заявки перейдите к каналу.**')
             .addFields(
                 { 
-                    name: 'Никнейм Игрока:', 
-                    value: '`'+nickResponse+'`',
+                    name: conf.WhiteList.Question1.Label, 
+                    value: '`'+responce1+'`',
                 },
                 { 
-                    name: 'Имя / Возраст Игрока:',
-                    value: '`'+nameResponse+'`',
+                    name: conf.WhiteList.Question2.Label,
+                    value: '`'+responce2+'`',
                 },
                 { 
-                    name: 'Отношение к Читам:',
-                    value: '`'+cheatsResponse+'`',
+                    name: conf.WhiteList.Question3.Label,
+                    value: '`'+responce3+'`',
                 },
                 { 
-                    name: 'Как нашёл сервер:',
-                    value: '`'+findResponse+'`',
+                    name: conf.WhiteList.Question4.Label,
+                    value: '`'+responce4+'`',
                 },
                 { 
-                    name: 'Цель на Проекте:',
-                    value: '`'+buildResponse+'`',
+                    name: conf.WhiteList.Question5.Label,
+                    value: '`'+responce5+'`',
                 },
                 )
                 .setThumbnail(modal.user.avatarURL())
@@ -82,24 +83,24 @@ module.exports = {
                 .setDescription('**Заявка была отправлена админам на рассмотрение! Пожалуйста ожидайте!**')
                 .addFields(
                     { 
-                        name: 'Никнейм Игрока:', 
-                        value: '`'+nickResponse+'`',
+                        name: conf.WhiteList.Question1.Label, 
+                        value: '`'+responce1+'`',
                     },
                     { 
-                        name: 'Имя / Возраст Игрока:',
-                        value: '`'+nameResponse+'`',
+                        name: conf.WhiteList.Question2.Label,
+                        value: '`'+responce2+'`',
                     },
                     { 
-                        name: 'Отношение к Читам:',
-                        value: '`'+cheatsResponse+'`',
+                        name: conf.WhiteList.Question3.Label,
+                        value: '`'+responce3+'`',
                     },
                     { 
-                        name: 'Как нашёл сервер:',
-                        value: '`'+findResponse+'`',
+                        name: conf.WhiteList.Question4.Label,
+                        value: '`'+responce4+'`',
                     },
                     { 
-                        name: 'Цель на Проекте:',
-                        value: '`'+buildResponse+'`',
+                        name: conf.WhiteList.Question5.Label,
+                        value: '`'+responce5+'`',
                     },
                     )
                 .setThumbnail(client.config.thumbImage)
