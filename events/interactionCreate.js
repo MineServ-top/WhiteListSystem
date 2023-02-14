@@ -225,7 +225,7 @@ module.exports = {
             })
             setTimeout(() => {
                 const delChan = client.channels.cache.get(interaction.channel.id)
-                delChan.delete()
+                delChan.delete().catch((e)=>{console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[31mERROR \x1b[37m| \x1b[36mПроизошла Ошибка > \x1b[31m'+e+'\x1b[0m')})
                 client.db.delete(interaction.channel.id)
             }, 10000)
         }
