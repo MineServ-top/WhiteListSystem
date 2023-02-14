@@ -133,7 +133,7 @@ module.exports = {
         const nickname = String(client.db.get(interaction.channel.id))
         
         if (interaction.customId == "addPlayer"){
-            if(interaction.member.permissions.has("ADMINISTRATOR")){
+            if(interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)){
                 var cmd = conf.WhiteList.addCommand.replaceAll('$user',nickname)
                 rcon(cmd)
                 console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mИгрок \x1b[33m'+nickname+' \x1b[36mбыл добавлен в вайтлист!\x1b[0m')
@@ -150,7 +150,7 @@ module.exports = {
         }
 
         if (interaction.customId == "removePlayer"){
-            if(interaction.member.permissions.has("ADMINISTRATOR")){
+            if(interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)){
                 var cmd = conf.WhiteList.remCommand.replaceAll('$user',nickname)
                 rcon(cmd)
                 console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mИгрок \x1b[33m'+nickname+' \x1b[36mбыл удалён из вайтлиста!\x1b[0m')

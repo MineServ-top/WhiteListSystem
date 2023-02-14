@@ -33,7 +33,7 @@ function rcon(cmd,type,msg){
 function wladd(r, msg){
   const arggs = msg.content.split(' ').slice(1)
   const nickname = arggs.join(' ')
-  if (!nickname || !msg.member.permissions.has("ADMINISTRATOR")) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
+  if (!nickname || !msg.member.permissions.has(PermissionsBitField.Flags.Administrator)) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
   else{
     var cmd = conf.WhiteList.add.replaceAll('$user',nickname)
     rcon(cmd,'1',msg)
@@ -46,7 +46,7 @@ function wladd(r, msg){
 function wlrem(r, msg){
   const arggs = msg.content.split(' ').slice(1)
   const nickname = arggs.join(' ')
- if (!nickname || !msg.member.permissions.has("ADMINISTRATOR")) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
+ if (!nickname || !msg.member.permissions.has(PermissionsBitField.Flags.Administrator)) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
  else{
     var cmd = conf.WhiteList.rem.replaceAll('$user',nickname)
     rcon(cmd,'1',msg)
@@ -60,7 +60,7 @@ function wlrem(r, msg){
 function wlban(r, msg){
   const arggs = msg.content.split(' ').slice(1)
   const nickname = arggs.join(' ')
-  if (!nickname || !msg.member.permissions.has("ADMINISTRATOR")) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
+  if (!nickname || !msg.member.permissions.has(PermissionsBitField.Flags.Administrator)) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
   else{
     var cmd = conf.WhiteList.ban.replaceAll('$user',nickname)
     rcon(cmd,'1',msg)
@@ -74,7 +74,7 @@ function wlban(r, msg){
 function wlunban(r, msg){
   const arggs = msg.content.split(' ').slice(1)
   const nickname = arggs.join(' ')
- if (!nickname || !msg.member.permissions.has("ADMINISTRATOR")) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
+ if (!nickname || !msg.member.permissions.has(PermissionsBitField.Flags.Administrator)) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
  else{
   var cmd = conf.WhiteList.unban.replaceAll('$user',nickname)
   rcon(cmd,'1',msg)
@@ -88,7 +88,7 @@ function wlunban(r, msg){
 function wlcmd(r, msg){
   const arggs = msg.content.split(' ').slice(1)
   const cmd = arggs.join(' ')
-  if (!cmd || !msg.member.permissions.has("ADMINISTRATOR")) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
+  if (!cmd || !msg.member.permissions.has(PermissionsBitField.Flags.Administrator)) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
   else{
     rcon(cmd,'0',msg)
     msg.channel.send({
@@ -97,7 +97,7 @@ function wlcmd(r, msg){
   }
 }
 function wlhelp(r, msg){
- if (!msg.member.permissions.has("ADMINISTRATOR")) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
+ if (!msg.member.permissions.has(PermissionsBitField.Flags.Administrator)) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
  else{
   const embed = new EmbedBuilder()
   .setColor('#00bd6d')
