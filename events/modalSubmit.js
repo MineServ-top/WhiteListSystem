@@ -66,7 +66,7 @@ module.exports = {
                 .setAuthor({
                     name: 'Никнейм Участника'
                 })
-                .setDescription('**Discord: <@'+modal.user.id+'> игровой ник: '+nickResponse+'**')
+                .setDescription('**Discord: <@'+modal.user.id+'> игровой ник: '+nickname+'**')
                 .setThumbnail(modal.user.avatarURL())
                 .setFooter({
                     text: client.config.footerText
