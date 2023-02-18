@@ -1,5 +1,5 @@
 const conf = require('./config.json')
-const { EmbedBuilder, PermissionsBitField  } = require('discord.js')
+const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 const prefix = conf.prefix
 var t = 0
 //=====WhiteList====

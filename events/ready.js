@@ -9,6 +9,18 @@ module.exports = {
         var sendChannel = client.channels.cache.get(client.config.mainEmbedChannel)
         time = new Date()
         console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mБот \x1b[33m'+client.user.username+' \x1b[36mзапустился.\x1b[0m')
+        if(!client.db.get(client.config.guildId)){
+            client.guilds.cache.get(client.config.guildId).roles.create({
+                data: {
+                    name: 'WhiteList',
+                    color: '#00ff48'
+                },
+                reason: 'Создание роли для принятия заявок в Discord'
+            }).then((r) => {
+                client.db.set(client.config.guildId,r.id)
+                console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mРоль \x1b[33m'+r.id+' \x1b[36mсоздана.\x1b[0m')
+            })
+        }
         function clearOldMessages(sendChannel,nbr){
             return sendChannel.messages.fetch({limit: 99}).then(messages => {
                 messages = messages.filter(msg => (msg.author.id == client.user.id && !msg.system))

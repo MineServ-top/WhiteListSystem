@@ -2,6 +2,8 @@
     "token": "",
     "prefix": "!",
 
+    "guildId": "",
+    
     "mainEmbedChannel": "",
 
     "requestParent": "",
