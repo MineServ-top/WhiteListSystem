@@ -1,5 +1,5 @@
 const conf = require('./config.json')
-const { EmbedBuilder, PermissionsBitField  } = require('discord.js')
+const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 const prefix = conf.prefix
 var t = 0
 //=====WhiteList====
@@ -35,7 +35,7 @@ function wladd(r, msg){
   const nickname = arggs.join(' ')
   if (!nickname || !msg.member.permissions.has(PermissionsBitField.Flags.Administrator)) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
   else{
-    var cmd = conf.WhiteList.add.replaceAll('$user',nickname)
+    var cmd = conf.WhiteList.addCommand.replaceAll('$user',nickname)
     rcon(cmd,'1',msg)
     msg.channel.send({
       content: '**Игрок с ником "'+nickname+'" успешно добавлен в вайтлист!**',
@@ -48,7 +48,7 @@ function wlrem(r, msg){
   const nickname = arggs.join(' ')
  if (!nickname || !msg.member.permissions.has(PermissionsBitField.Flags.Administrator)) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
  else{
-    var cmd = conf.WhiteList.rem.replaceAll('$user',nickname)
+    var cmd = conf.WhiteList.remCommand.replaceAll('$user',nickname)
     rcon(cmd,'1',msg)
     console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mИгрок \x1b[33m'+nickname+' \x1b[36mбыл удалён из вайтлиста!\x1b[0m')
     msg.channel.send({
@@ -62,7 +62,7 @@ function wlban(r, msg){
   const nickname = arggs.join(' ')
   if (!nickname || !msg.member.permissions.has(PermissionsBitField.Flags.Administrator)) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
   else{
-    var cmd = conf.WhiteList.ban.replaceAll('$user',nickname)
+    var cmd = conf.WhiteList.banCommand.replaceAll('$user',nickname)
     rcon(cmd,'1',msg)
     msg.channel.send({
       content: '**Игрок с ником "'+nickname+'" успешно забанен!**',
@@ -76,7 +76,7 @@ function wlunban(r, msg){
   const nickname = arggs.join(' ')
  if (!nickname || !msg.member.permissions.has(PermissionsBitField.Flags.Administrator)) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
  else{
-  var cmd = conf.WhiteList.unban.replaceAll('$user',nickname)
+  var cmd = conf.WhiteList.unbanCommand.replaceAll('$user',nickname)
   rcon(cmd,'1',msg)
   msg.channel.send({
     content: '**Игрок с ником "'+nickname+'" успешно разбанен!**',
