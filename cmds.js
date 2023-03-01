@@ -33,7 +33,7 @@ function rcon(cmd,type,msg){
 function wladd(r, msg){
   const arggs = msg.content.split(' ').slice(1)
   const nickname = arggs.join(' ')
-  if (!nickname || !msg.member.permissions.has(PermissionsBitField.Flags.Administrator)  || !msg.member.roles.cache.has(client.db.get(conf.guildId))) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
+  if (!nickname || !msg.member.permissions.has(PermissionsBitField.Flags.Administrator)  || !msg.member.roles.cache.has(r.db.get(conf.guildId))) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
   else{
     var cmd = conf.WhiteList.addCommand.replaceAll('$user',nickname)
     rcon(cmd,'1',msg)
@@ -46,7 +46,7 @@ function wladd(r, msg){
 function wlrem(r, msg){
   const arggs = msg.content.split(' ').slice(1)
   const nickname = arggs.join(' ')
- if (!nickname || !msg.member.permissions.has(PermissionsBitField.Flags.Administrator) || !msg.member.roles.cache.has(client.db.get(conf.guildId))) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
+ if (!nickname || !msg.member.permissions.has(PermissionsBitField.Flags.Administrator) || !msg.member.roles.cache.has(r.db.get(conf.guildId))) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
  else{
     var cmd = conf.WhiteList.remCommand.replaceAll('$user',nickname)
     rcon(cmd,'1',msg)
