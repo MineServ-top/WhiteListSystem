@@ -8,6 +8,7 @@
 {
     "token": "",//токен бота
     "prefix": "!",//префикс бота
+    "embedCollor": "#00bd6d",//Цвета встраиваний
 
     "guildId": "",//Айди Discord сервера, в котором будет работать бот
     
@@ -17,7 +18,7 @@
     "requestsChannel": "",//канал, в который будут отправляться заявки
     "nicknamesChannel": "",//канал, в который будут отправляться ники
 
-    "adminRole": "",//роль администратора
+    "moderatorRoleCollor": "",//цвет роли модератора
 
     "thumbImage": "https://media.discordapp.net/attachments/1057078822375264349/1066034808523866223/WoWqWgf5J4U.png",
     "footerText": "MineServ.top | WhiteList",

@@ -4,7 +4,7 @@ module.exports = {
     async execute(interaction, client){
         const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ChannelType, PermissionsBitField } = require('discord.js')
         const { Modal, TextInputComponent, showModal } = require('discord-modals')
-        var conf = client.config
+        const conf = client.config
         const time = new Date()
         function rcon(cmd){
             const Rcon = require('rcon')
@@ -43,7 +43,7 @@ module.exports = {
                     allow: [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel],
                 },
                 {
-                    id: conf.adminRole,
+                    id: client.db.get(conf.guildId),
                     allow: [PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel],
                 },
                 {
@@ -57,7 +57,7 @@ module.exports = {
                     ephemeral: true
                 })
                 const embed = new EmbedBuilder()
-                .setColor('#00bd6d')
+                .setColor(conf.embedCollor)
                 .setAuthor(
                     {
                         name: 'Заявка Создана'
@@ -133,7 +133,7 @@ module.exports = {
         const nickname = String(client.db.get(interaction.channel.id))
         
         if (interaction.customId == "addPlayer"){
-            if(interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)){
+            if(interaction.member.permissions.has(PermissionsBitField.Flags.Administrator) || interaction.member.roles.cache.has(client.db.get(conf.guildId))){
                 var cmd = conf.WhiteList.addCommand.replaceAll('$user',nickname)
                 rcon(cmd)
                 console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mИгрок \x1b[33m'+nickname+' \x1b[36mбыл добавлен в вайтлист!\x1b[0m')
@@ -150,7 +150,7 @@ module.exports = {
         }
 
         if (interaction.customId == "removePlayer"){
-            if(interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)){
+            if(interaction.member.permissions.has(PermissionsBitField.Flags.Administrator) || interaction.member.roles.cache.has(client.db.get(conf.guildId))){
                 var cmd = conf.WhiteList.remCommand.replaceAll('$user',nickname)
                 rcon(cmd)
                 console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mИгрок \x1b[33m'+nickname+' \x1b[36mбыл удалён из вайтлиста!\x1b[0m')
@@ -167,7 +167,7 @@ module.exports = {
         }
         if (interaction.customId == "deleteChan"){
             const embed = new EmbedBuilder()
-                .setColor('#00bd6d')
+                .setColor(conf.embedCollor)
                 .setAuthor({
                     name: 'Удаление Заявки'
                 })
@@ -196,7 +196,7 @@ module.exports = {
         }
         if (interaction.customId == "not"){
             const embed = new EmbedBuilder()
-            .setColor('#00bd6d')
+            .setColor(conf.embedCollor)
             .setAuthor({
                 name: 'Удаление Заявки'
             })
@@ -211,7 +211,7 @@ module.exports = {
         }
         if (interaction.customId == "yes"){
             const embed = new EmbedBuilder()
-            .setColor('#00bd6d')
+            .setColor(conf.embedCollor)
             .setAuthor({
                 name: 'Удаление Заявки'
             })

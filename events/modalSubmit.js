@@ -3,10 +3,10 @@ module.exports = {
     name: 'modalSubmit',
     async execute(modal, client, message, guild){
         const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
-        var conf = client.config
+        const conf = client.config
         if(modal.customId === 'requestModal'){
-            const requestsChan = client.channels.cache.get(client.config.requestsChannel)
-            const nicksChan = client.channels.cache.get(client.config.nicknamesChannel)
+            const requestsChan = client.channels.cache.get(conf.requestsChannel)
+            const nicksChan = client.channels.cache.get(conf.nicknamesChannel)
 
             const nickname = modal.getTextInputValue('input1')
             const responce2 = modal.getTextInputValue('input2')
@@ -18,7 +18,7 @@ module.exports = {
 
             modal.member.setNickname(nickname).catch((e)=>{console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[31mERROR \x1b[37m| \x1b[36mПроизошла Ошибка > \x1b[31m'+e+'\x1b[0m')})            
             const adminEmbed = new EmbedBuilder()
-            .setColor('#00bd6d')
+            .setColor(conf.embedCollor)
             .setAuthor({
                 name: 'Заявка Участника'
             })
@@ -47,7 +47,7 @@ module.exports = {
                 )
                 .setThumbnail(modal.user.avatarURL())
                 .setFooter({
-                    text: client.config.footerText
+                    text: conf.footerText
                 })
                 const adminRow = new ActionRowBuilder()
                 .addComponents(
@@ -62,21 +62,21 @@ module.exports = {
                     components: [adminRow]
                 })
                 const nickEmbed = new EmbedBuilder()
-                .setColor('#00bd6d')
+                .setColor(conf.embedCollor)
                 .setAuthor({
                     name: 'Никнейм Участника'
                 })
                 .setDescription('**Discord: <@'+modal.user.id+'> игровой ник: '+nickname+'**')
                 .setThumbnail(modal.user.avatarURL())
                 .setFooter({
-                    text: client.config.footerText
+                    text: conf.footerText
                 })
                 nicksChan.send({
                     embeds: [nickEmbed],
                 })
 
                 const rqEmbed = new EmbedBuilder()
-                .setColor('#00bd6d')
+                .setColor(conf.embedCollor)
                 .setAuthor({
                     name: 'Заявка подана!'
                 })
@@ -103,9 +103,9 @@ module.exports = {
                         value: '`'+responce5+'`',
                     },
                     )
-                .setThumbnail(client.config.thumbImage)
+                .setThumbnail(conf.thumbImage)
                 .setFooter({
-                    text: client.config.footerText
+                    text: conf.footerText
                 })
                 const remBtn = new ActionRowBuilder()
                 .addComponents(
