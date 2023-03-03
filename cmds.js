@@ -3,7 +3,7 @@ const { EmbedBuilder, PermissionsBitField } = require('discord.js')
 const prefix = conf.prefix
 var t = 0
 //=====WhiteList====
-function rcon(cmd,type,msg){
+function sendCmd(cmd,type,msg){
   const time = new Date()
   const Rcon = require('rcon')
   const o = {tcp:true,challenge:false}
@@ -30,40 +30,44 @@ function rcon(cmd,type,msg){
   })
   conn.connect()
 }
-function wladd(r, msg){
+function wladd(client, msg){
   const arggs = msg.content.split(' ').slice(1)
   const nickname = arggs.join(' ')
-  if (!nickname || !msg.member.permissions.has(PermissionsBitField.Flags.Administrator)  || !msg.member.roles.cache.has(r.db.get(conf.guildId))) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
-  else{
+  if (msg.member.permissions.has(PermissionsBitField.Flags.Administrator) || msg.member.roles.cache.has(client.db.get(conf.guildId))){
     var cmd = conf.WhiteList.addCommand.replaceAll('$user',nickname)
-    rcon(cmd,'1',msg)
+    sendCmd(cmd,'1',msg)
     msg.channel.send({
       content: '**Игрок с ником "'+nickname+'" успешно добавлен в вайтлист!**',
     })
     console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mИгрок \x1b[33m'+nickname+' \x1b[36mбыл добавлен в вайтлист!\x1b[0m')
   }
+  else{
+    msg.channel.send({content: '**У вас нет прав на выполнение команды!**',})
+  }
 }
-function wlrem(r, msg){
+function wlrem(client, msg){
   const arggs = msg.content.split(' ').slice(1)
   const nickname = arggs.join(' ')
- if (!nickname || !msg.member.permissions.has(PermissionsBitField.Flags.Administrator) || !msg.member.roles.cache.has(r.db.get(conf.guildId))) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
- else{
-    var cmd = conf.WhiteList.remCommand.replaceAll('$user',nickname)
-    rcon(cmd,'1',msg)
+  if (msg.member.permissions.has(PermissionsBitField.Flags.Administrator) || msg.member.roles.cache.has(client.db.get(conf.guildId))){
+    var cmd = conf.WhiteList.rem.replaceAll('$user',nickname)
+    sendCmd(cmd,'1',msg)
     console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mИгрок \x1b[33m'+nickname+' \x1b[36mбыл удалён из вайтлиста!\x1b[0m')
     msg.channel.send({
       content: '**Игрок с ником "'+nickname+'" успешно удалён из вайтлиста!**',
     })
   }
+  else{
+    msg.channel.send({content: '**У вас нет прав на выполнение команды!**',})
+  }
 }
 //=====BANS====
-function wlban(r, msg){
+function wlban(client, msg){
   const arggs = msg.content.split(' ').slice(1)
   const nickname = arggs.join(' ')
   if (!nickname || !msg.member.permissions.has(PermissionsBitField.Flags.Administrator)) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
   else{
     var cmd = conf.WhiteList.banCommand.replaceAll('$user',nickname)
-    rcon(cmd,'1',msg)
+    sendCmd(cmd,'1',msg)
     msg.channel.send({
       content: '**Игрок с ником "'+nickname+'" успешно забанен!**',
     })
@@ -71,13 +75,13 @@ function wlban(r, msg){
   }
 }
 
-function wlunban(r, msg){
+function wlunban(client, msg){
   const arggs = msg.content.split(' ').slice(1)
   const nickname = arggs.join(' ')
  if (!nickname || !msg.member.permissions.has(PermissionsBitField.Flags.Administrator)) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
  else{
   var cmd = conf.WhiteList.unbanCommand.replaceAll('$user',nickname)
-  rcon(cmd,'1',msg)
+  sendCmd(cmd,'1',msg)
   msg.channel.send({
     content: '**Игрок с ником "'+nickname+'" успешно разбанен!**',
   })
@@ -85,22 +89,21 @@ function wlunban(r, msg){
   }
 }
 
-function wlcmd(r, msg){
+function wlcmd(client, msg){
   const arggs = msg.content.split(' ').slice(1)
   const cmd = arggs.join(' ')
   if (!cmd || !msg.member.permissions.has(PermissionsBitField.Flags.Administrator)) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
   else{
-    rcon(cmd,'0',msg)
+    sendCmd(cmd,'0',msg)
     msg.channel.send({
       content: '**Команда "'+cmd+'" выполнена на сервере!**',
     })
   }
 }
-function wlhelp(r, msg){
- if (!msg.member.permissions.has(PermissionsBitField.Flags.Administrator)) return msg.channel.send({content: '**У вас нет прав на выполнение команды, либо вы допустили ошибку!**',})
- else{
-  const embed = new EmbedBuilder()
-  .setColor(conf.embedCollor)
+function wlhelp(client, msg){
+  if (msg.member.permissions.has(PermissionsBitField.Flags.Administrator) || msg.member.roles.cache.has(client.db.get(conf.guildId))){
+    const embed = new EmbedBuilder()
+  .setColor('#00ffe1')
   .setAuthor(
     {
       name: 'MineServ WhiteList'
@@ -125,6 +128,9 @@ function wlhelp(r, msg){
         embeds: [embed]
       }
     )
+  }
+  else{
+    msg.channel.send({content: '**У вас нет прав на выполнение команды!**',})
   }
 }
 var comms_list = [
