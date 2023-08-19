@@ -49,7 +49,7 @@ function wlrem(client, msg){
   const arggs = msg.content.split(' ').slice(1)
   const nickname = arggs.join(' ')
   if (msg.member.permissions.has(PermissionsBitField.Flags.Administrator) || msg.member.roles.cache.has(client.db.get(conf.guildId))){
-    var cmd = conf.WhiteList.rem.replaceAll('$user',nickname)
+    var cmd = conf.WhiteList.remCommand.replaceAll('$user',nickname)
     sendCmd(cmd,'1',msg)
     console.log('\x1b[1m\x1b[33m'+time+' \x1b[37m| \x1b[32mINFO \x1b[37m| \x1b[36mИгрок \x1b[33m'+nickname+' \x1b[36mбыл удалён из вайтлиста!\x1b[0m')
     msg.channel.send({
